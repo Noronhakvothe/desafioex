@@ -5,6 +5,9 @@ import { userRepository } from "../Repositories/userRepository";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { AppDataSource } from '../data-source';
+
+
 
 export class UserController {
   async create (req: Request, res: Response) {
@@ -25,21 +28,22 @@ export class UserController {
       apartment,
       password: hashPassword
     });
-
+ 
     await userRepository.save(newUser)
    
     const { password: _, ...user } = newUser;
 
     return res.status(201).json(user);
   }
- 
-  
+
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
+   
     
-    const user = await userRepository.findOneBy({ email }) 
-    console.log(user)
-    if(!user){
+    const user = await userRepository.findOneOrFail({where:{email: email}}) 
+  
+
+      if(!user){
       throw new BadRequestError('email or password not found')
  
     }
@@ -49,6 +53,7 @@ export class UserController {
       console.log(user)
       throw new BadRequestError('email or password not found!')
     }
+    console.log(process.env.JWT_PASS)
     const token = jwt.sign({
       id: user.idUser},
       process.env.JWT_PASS ?? '',{
@@ -60,4 +65,5 @@ export class UserController {
     user: userLogin,
     token: token,
    })
- }}
+ }
+} 

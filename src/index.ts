@@ -3,8 +3,12 @@ import { errorMiddleware } from './middlewares/error';
 import express from 'express'
 import { AppDataSource } from './data-source'
 import routes from './routes'
+import * as dotenv from "dotenv"
+
+dotenv.config()
 
 AppDataSource.initialize().then(() => {
+
     const app = express()
 
     app.use(express.json())
