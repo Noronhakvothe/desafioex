@@ -46,6 +46,7 @@ export class UserController {
 
     const verifyPass = await bcrypt.compare(password, user.password)
     if (!verifyPass){
+      console.log(user)
       throw new BadRequestError('email or password not found!')
     }
     const token = jwt.sign({
