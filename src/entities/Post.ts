@@ -1,18 +1,20 @@
 import { User } from './User';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-
+@Entity('posts')
 export class Post {
     @PrimaryGeneratedColumn()
     idPost: number
 
-    @Column({type: 'text', length:300})
+    @Column({length:300})
     content: string
 
     @Column()
+    @CreateDateColumn()
     created_at: Date
     
     @Column()
+    @UpdateDateColumn()
     updated_at: Date
 
     @ManyToOne(() => User, User => User)

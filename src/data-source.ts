@@ -12,7 +12,8 @@ export const AppDataSource = new DataSource({
     database:  "parrot",
     synchronize: true,
     logging: false,
-    migrations: [],
+    entities: [`${__dirname}/**/entities/*.{ts,js}`],
+    migrations: [`${__dirname}/**/migrations/*.{ts,js}`],
     subscribers: [],
 
 })

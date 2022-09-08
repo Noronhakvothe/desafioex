@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Post } from './Post';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import bcrypt from "bcrypt" 
+
 
 @Entity('users')
 export class User{
@@ -15,13 +18,17 @@ export class User{
    apartment: number
 
    @Column()
-   password: number
+   password: string
 
    @Column()
+   @CreateDateColumn()
    created_at: Date
 
    @Column()
+   @UpdateDateColumn()
    updated_at: Date
 
-   
+   @OneToMany(() => Post, post => post)
+   Post: Post[]
+    static idUser: any;
 }
