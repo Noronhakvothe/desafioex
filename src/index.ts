@@ -5,6 +5,7 @@ import { AppDataSource } from './data-source'
 import routes from './routes'
 import * as dotenv from "dotenv"
 
+//vinculando dot env ao index
 dotenv.config()
 
 AppDataSource.initialize().then(() => {
